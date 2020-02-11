@@ -1,7 +1,23 @@
+
 current floor = x
+SEQUENCE CallButtons
+    IF button Up is click
+
+    ELSE button Down is click 
+
+    WHILE there is someone inside or in front who wants to go UP THEN
+    continue in that direction.
+    END WHILE
+    FOR EACH stage positions requested reached
+    call OpenDoor
+    END SEQUENCE
+
+SEQUENCE FloorRequestButtons
+    IF button 1 is click THEN
+    
 
 SEQUENCE CallElevator
-    IF call buttton is click THEN
+    IF CallButtons is click THEN
         GET position and direction
         READ position and direction
         IF requested positon < x
@@ -52,11 +68,11 @@ SEQUENCE FloorRequest
 END SEQUENCE
 
 SEQUENCE ProceedUP
-    WHILE there is someone inside or in front who wants to go UP THEN
-    continue in that direction.
-    END WHILE
-    FOR EACH stage postions requested reach
-    call OpenDoor
+    // WHILE there is someone inside or in front who wants to go UP THEN
+    // continue in that direction.
+    // END WHILE
+    // FOR EACH stage positions requested reached
+    // call OpenDoor
     IF elevator exhausted requests inv current direction THEN 
     change direction if there is demands in the other direction. 
     THEN call Run
@@ -64,11 +80,11 @@ SEQUENCE ProceedUP
 END SEQUENCE
 
 SEQUENCE ProceedDO
-    WHILE there is someone inside or in front who wants to go DOWN THEN
-    continue in that direction.
-    END WHILE
-    FOR EACH stage postions requested reach
-    call OpenDoor
+    // WHILE there is someone inside or in front who wants to go DOWN THEN
+    // continue in that direction.
+    // END WHILE
+    // FOR EACH stage positions requested reached
+    // call OpenDoor
     IF elevator exhausted requests inv current direction THEN 
     change direction if there is demands in the other direction. 
     THEN call Run
