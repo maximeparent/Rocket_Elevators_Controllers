@@ -1,0 +1,121 @@
+
+current floor = x
+
+SEQUENCE CallElevator
+    IF call buttton is click THEN
+        GET position and direction
+        READ position and direction
+        IF requested positon < x
+        CALL Run
+
+    ELSE IF buttton is click THEN
+        GET position and direction
+        READ position and direction
+        IF requested positon > x
+        CALL Run
+
+    ELSE stop 
+    ENDIF
+END SEQUENCE
+
+
+SEQUENCE Run
+    WHILE stop
+    READ position and direction requested
+    CALCULATE the difference between them position and user position
+    CALL the closer elevators or going in that direction THEN 
+    END WHILE
+    elevator moving to position
+    WHEN reach requested position THEN
+    stop
+    CALL OpenDoor
+ END SEQUENCE
+
+SEQUENCE OpenDoor
+    open door 
+    wait 3 sec
+    IF door are block THEN 
+    wait 3 sec
+    ELSE close door
+    CALL FloorRequest
+    ENDIF
+END SEQUENCE
+
+SEQUENCE FloorRequest
+    Wait for request on floor button
+    GET position and direction
+    READ position and direction
+    IF requested positon > x
+    CALL ProceedUP 
+    ELSE IF  requested positon < x
+    CALL ProceedDO
+    ELSE stop 
+END SEQUENCE
+
+SEQUENCE ProceedUP
+    WHILE there is someone inside or in front who wants to go UP THEN
+    continue in that direction.
+    END WHILE
+    FOR EACH stage postions requested reach
+    call OpenDoor
+    IF elevator exhausted requests inv current direction THEN 
+    change direction if there is demands in the other direction. 
+    THEN call Run
+    ELSE stop
+END SEQUENCE
+
+SEQUENCE ProceedDO
+    WHILE there is someone inside or in front who wants to go DOWN THEN
+    continue in that direction.
+    END WHILE
+    FOR EACH stage postions requested reach
+    call OpenDoor
+    IF elevator exhausted requests inv current direction THEN 
+    change direction if there is demands in the other direction. 
+    THEN call Run
+    ELSE stop
+    ENDIF
+END SEQUENCE
+    
+
+
+
+// L’immeuble Résidentiel pour lequel doit être programmé 
+// le premier contrôleur n’a qu’une seule colonne composée de deux ascenseurs et 10 étages.
+
+
+// IF condition THEN 
+// sequence 1
+// ELSE 
+// sequence 2
+// ENDIF
+
+
+
+
+    SEQUENCE
+CALL
+BEGIN
+EXCEPTION
+WHILE
+END WHILE
+IF, THEN, ELSE
+END IF
+REPEAT
+UNTIL
+CASE
+ENDCASE
+FOR
+FOR EACH
+END FOR
+READ, OBTAIN, GET
+PRINT, DISPLAY, SHOW
+COMPUTE, CALCULATE, DETERMINE
+SET, INIT
+INCREMENT, BUMP
+ADD 
+
+REMOVE
+
+
+ PUSH, POP
