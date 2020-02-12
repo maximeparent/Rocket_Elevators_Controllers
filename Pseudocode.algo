@@ -1,11 +1,10 @@
-' ----------BUTTON CALL ELEVATOR---------------------------------------------------------------------------------
+'---------------------- BUTTON CALL ELEVATOR-------------------------------
 SEQUENCE call_Elevator USING direction AND floor
     CALL find_call_button WITH cage AND requested_floor RETURNING find_call_button
     CALL send_request WITH cage AND requested_floor RETURNING send_request
 END SEQUENCE
 
-    '-----------------FIND CALL BUTTON'--
-
+'---------------------- FIND CALL BUTTON'-------------------------------
 SEQUENCE find_call_button USING direction AND floor
     FOR EACH call_button_floor
     SET call_button_floor to floor AND SET call_button_direction to direction THEN
@@ -15,15 +14,13 @@ SEQUENCE find_call_button USING direction AND floor
     END FOR
 END SEQUENCE
 
-    '----------SEND REQUEST TO ELEVATOR LIST------------------------------
-
+'---------------------- SEND REQUEST TO ELEVATOR LIST-------------------------------
 SEQUENCE send_request USING cage AND requested_floor
     CALL find_elevator with cage AND requested_floor RETURNING find_elevator
 return elevator
-
 END SEQUENCE
 
-    '------------ find elevator ---------
+'---------------------- find elevator-------------------------------
 SEQUENCE find_elevator USING movement AND direction AND requested_floor
     FOR EACH elevator in elevatorList
 
@@ -49,12 +46,13 @@ RETURN nearest_elevator
     END IF
     END EACH
 END SEQUENCE
-    '------------ nearest elevator ----------------'
+
+'---------------------- nearest elevator -------------------------------
 SEQUENCE nearest_elevator WITH requested_floor AND direction AND position
     CALCULATE difference between requested_floor AND elevator_floor
 RETURN nearest_elevator
 
-    '------------ DOORS ----------------'
+'---------------------- DOORS -------------------------------
 SEQUENCE open_door USING cage
     SET door to open
     IF door is open THEN
@@ -70,9 +68,7 @@ SEQUENCE close_door USING cage
     SET door to close
 END SEQUENCE
 
-    ' -------------MOVE ELEVATOR---------------------------------------------------------------------------------
-
-SEQUENCE move USING cage and requested_floor
+'---------------------- MOVE ELEVATOR -------------------------------
     IF door IS NOT closed
     CALL close_door WITH cage
     IF elevator_floor LESS THAN requested_floor THEN
@@ -87,7 +83,7 @@ SEQUENCE move USING cage and requested_floor
     END IF
 END SEQUENCE
 
-    '----------FLOOR BUTTONS INSIDE ELEVATOR------------------------------------
+'---------------------- FLOOR BUTTONS INSIDE ELEVATOR ------------------------------------
 SEQUENCE floor_buttons USING direction AND floor
     CALL find_floor_buttons WITH cage AND requested_floor RETURNING find_floor_buttons
 
