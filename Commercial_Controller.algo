@@ -6,49 +6,33 @@ END SEQUENCE
 
 '---------------------- FIND CALL BUTTON'-------------------------------
 SEQUENCE call_button USING direction AND requested_floor
-        SET call_button to direction_requested
-            return call_button_floor
-    END FOR
+
 END SEQUENCE
 
 '---------------------- fIND ELEVATOR -------------------------------
 SEQUENCE find_elevator USING direction AND requested_floor
+
     FOR EACH elevator in elevatorList
-
-        IF requested_floor = elevator_floor AND elevator_not_busy THEN
-            RETURN elevator
-
-        ELSE IF requested_floor = elevator_floor AND direction = elevator_direction THEN
-            RETURN elevator
-
-        ELSE IF requested_floor > elevator_floo AND elevator is moving in same direction THEN
-            CALL nearest_elevator WITH  requested_floor AND direction RETURNING nearest_elevator
-            RETURN nearest_elevator
-
-        ELSE IF requested_floor < elevator_floor AND elevator is moving in same direction THEN
-            CALL nearest_elevator WITH  requested_floor AND direction RETURNING nearest_elevator
-            RETURN nearest_elevator
-
-        ELSE IF requested_floor > elevator_floor THEN
-            CALL nearest_elevator WITH requested_floor AND direction RETURNING nearest_elevator
-            RETURN nearest_elevator
-
-             ELSE IF requested_floor < elevator_floor THEN
-             CALL nearest_elevator WITH requested_floor AND direction RETURNING nearest_elevator
-            RETURN nearest_elevator
-
-        ELSE IF elevator_not_busy THEN
-            CALL nearest_elevator WITH requested_floor AND direction
-            RETURN elevator
-
+      CASE Request Floor
+      requested_Floor > 7 AND requested_Floor < 1 THEN
+        RETURN elevator_1 THEN
         CALL move_elevator
-        END IF
+      requested_Floor > 8 AND requestFloor < 27 THEN
+        RETURN elevator_2 THEN
+        CALL move_elevator
+      requested_Floor > 28 AND requestFloor < 47 THEN
+        RETURN elevator_3 THEN
+        CALL move_elevator
+      requested_Floor > 48 AND requestFloor < 67 THEN
+        RETURN elevator_4 THEN
+        CALL move_elevator
+    ENDCASE
     END EACH
 END SEQUENCE
 
 '---------------------- NEAREST ELEVATOR -------------------------------
 SEQUENCE nearest_elevator WITH requested_floor AND direction 
-    CALCULATE difference between requested_floor AND elevator_floor
+
 RETURN nearest_elevator
 
 '---------------------- DOORS -------------------------------
