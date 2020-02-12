@@ -20,7 +20,7 @@ SEQUENCE send_request USING cage AND requested_floor
 return elevator
 END SEQUENCE
 
-'---------------------- find elevator-------------------------------
+'---------------------- fIND ELEVATOR -------------------------------
 SEQUENCE find_elevator USING movement AND direction AND requested_floor
     FOR EACH elevator in elevatorList
 
@@ -47,7 +47,7 @@ RETURN nearest_elevator
     END EACH
 END SEQUENCE
 
-'---------------------- nearest elevator -------------------------------
+'---------------------- NEAREST ELEVATOR -------------------------------
 SEQUENCE nearest_elevator WITH requested_floor AND direction AND position
     CALCULATE difference between requested_floor AND elevator_floor
 RETURN nearest_elevator
@@ -86,7 +86,6 @@ END SEQUENCE
 '---------------------- FLOOR BUTTONS INSIDE ELEVATOR ------------------------------------
 SEQUENCE floor_buttons USING direction AND floor
     CALL find_floor_buttons WITH cage AND requested_floor RETURNING find_floor_buttons
-
 SEQUENCE find_floor_buttons
     FOR EACH CallButton IN CallButtons
 return find_floor_buttons
