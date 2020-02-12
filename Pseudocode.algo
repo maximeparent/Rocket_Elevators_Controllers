@@ -1,136 +1,95 @@
+' ----------BUTTON CALL ELEVATOR---------------------------------------------------------------------------------
+SEQUENCE call_Elevator USING direction AND floor
+    CALL find_call_button WITH cage AND requested_floor RETURNING find_call_button
+    CALL send_request WITH cage AND requested_floor RETURNING send_request
+END SEQUENCE
 
-current floor = x
-SEQUENCE CallButtons
-    IF button Up is click
+    '-----------------FIND CALL BUTTON'-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
-    ELSE button Down is click 
+    SEQUENCE find_call_button USING direction AND floor
+    FOR EACH call_button_floor
+    SET call_button_floor to floor AND SET call_button_direction to direction THEN
+    CALL move_elevator WITH floor AND elevator_floor
+    END IF
+    END FOR
+END SEQUENCE
 
-    WHILE there is someone inside or in front who wants to go UP THEN
-    continue in that direction.
-    END WHILE
-    FOR EACH stage positions requested reached
-    call OpenDoor
-    END SEQUENCE
+    '----------SEND REQUEST TO ELEVATOR LIST------------------------------
 
-SEQUENCE FloorRequestButtons
-    IF button 1 is click THEN
-    
-
-SEQUENCE CallElevator
-    IF CallButtons is click THEN
-        GET position and direction
-        READ position and direction
-        IF requested positon < x
-        CALL Run
-
-    ELSE IF buttton is click THEN
-        GET position and direction
-        READ position and direction
-        IF requested positon > x
-        CALL Run
-
-    ELSE stop 
-    ENDIF
+SEQUENCE send_request USING cage AND requested_floor
+    CALL find_elevator with cage AND requested_floor
+return elevator
 END SEQUENCE
 
 
-SEQUENCE Run
-    WHILE stop
-    READ position and direction requested
-    CALCULATE the difference between them position and user position
-    CALL the closer elevators or going in that direction THEN 
-    END WHILE
-    elevator moving to position
-    WHEN reach requested position THEN
-    stop
-    CALL OpenDoor
- END SEQUENCE
+    '------------ find elevator ---------
+SEQUENCE find_elevator USING cage AND requested_floor
+    FOR EACH elevator in elevatorList
 
-SEQUENCE OpenDoor
-    open door 
-    wait 3 sec
-    IF door are block THEN 
-    wait 3 sec
-    ELSE close door
-    CALL FloorRequest
-    ENDIF
+    IF elevatorFloor is equal to floor THEN
+    CALL open_door
+RETURN
+
+    ELSE IF elevatorFloor > floor OR elevatorFloor LESS THAN floor AND elevatorDirection is equal TO direction THEN
+RETURN elevator
+    CAll move_up WITH cage and requested_floor
+
+    ELSE IF elevatorFloor > floor OR elevatorFloor LESS THAN floor AND elevatorDirection is NOT equal TO direction THEN
+RETURN elevator
+    CALL move_down WITH cage and requested_floor
+    END IF
+    END FOR
 END SEQUENCE
 
-SEQUENCE FloorRequest
-    Wait for request on floor button
-    GET position and direction
-    READ position and direction
-    IF requested positon > x
-    CALL ProceedUP 
-    ELSE IF  requested positon < x
-    CALL ProceedDO
-    ELSE stop 
+    '------------ Best elevator to send ---------
+SEQUENCE best_elevator USING direction AND requested_floor
+
+
+    '------------ DOORS ----------------'
+SEQUENCE open_door USING cage
+SET door to open
+IF door is open THEN
+SET timer to 5 seconds THEN
+IF no obstruction THEN
+CALL close_door
+IF obstruction THEN
+SET timer to 5 seconds THEN
+CALL close_door
 END SEQUENCE
 
-SEQUENCE ProceedUP
-    // WHILE there is someone inside or in front who wants to go UP THEN
-    // continue in that direction.
-    // END WHILE
-    // FOR EACH stage positions requested reached
-    // call OpenDoor
-    IF elevator exhausted requests inv current direction THEN 
-    change direction if there is demands in the other direction. 
-    THEN call Run
-    ELSE stop
+SEQUENCE close_door USING cage
+SET door to close
 END SEQUENCE
 
-SEQUENCE ProceedDO
-    // WHILE there is someone inside or in front who wants to go DOWN THEN
-    // continue in that direction.
-    // END WHILE
-    // FOR EACH stage positions requested reached
-    // call OpenDoor
-    IF elevator exhausted requests inv current direction THEN 
-    change direction if there is demands in the other direction. 
-    THEN call Run
-    ELSE stop
-    ENDIF
-END SEQUENCE
-    
+    ' -------------MOVE THE ELEVATOR UP---------------------------------------------------------------------------------
 
-
-
-// L’immeuble Résidentiel pour lequel doit être programmé 
-// le premier contrôleur n’a qu’une seule colonne composée de deux ascenseurs et 10 étages.
-
-
-// IF condition THEN 
-// sequence 1
-// ELSE 
-// sequence 2
-// ENDIF
-
-
-
-
-    SEQUENCE
-CALL
-BEGIN
-EXCEPTION
-WHILE
-END WHILE
-IF, THEN, ELSE
+SEQUENCE move_up USING cage and requested_floor
+IF door IS NOT closed
+CALL close_door WITH cage
+INCREMENT elevator_floor by 1
+REPEAT - UNTIL elevator_floor = requested_floor THEN
+CALL open_door
 END IF
-REPEAT
-UNTIL
-CASE
-ENDCASE
-FOR
-FOR EACH
 END FOR
-READ, OBTAIN, GET
-PRINT, DISPLAY, SHOW
-COMPUTE, CALCULATE, DETERMINE
-SET, INIT
-INCREMENT, BUMP
-ADD 
+END SEQUENCE
+    ' -------------MOVE THE ELEVATOR DOWN-------------------------------------------------------------------------------
 
-REMOVE
+SEQUENCE move_down USING
+IF door IS NOT closed
+CALL close_door WITH cage
+DECREMENT elevator_floor by 1
+REPEAT - UNTIL elevator_floor = requested_floor THEN
+CALL open_door
+END IF
+END FOR
+END SEQUENCE
 
+    '----------FLOOR BUTTONS INSIDE ELEVATOR------------------------------------
+SEQUENCE floor_buttons USING direction AND floor
+CALL find_floor_buttons WITH cage AND requested_floor RETURNING find_floor_buttons
 
- PUSH, POP
+SEQUENCE find_floor_buttons
+FOR EACH CallButton IN CallButtons
+return find_floor_buttons
+
+'------------ STOP ----------------'
