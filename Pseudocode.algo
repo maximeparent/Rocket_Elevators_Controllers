@@ -88,10 +88,11 @@ SEQUENCE move USING cage and requested_floor
     END IF
 END SEQUENCE
 
-    '----------FLOOR BUTTONS INSIDE ELEVATOR------------------------------------
+'----------FLOOR BUTTONS INSIDE ELEVATOR------------------------------------
 SEQUENCE floor_buttons USING direction AND floor
 CALL find_floor_buttons WITH cage AND requested_floor RETURNING find_floor_buttons
 
 SEQUENCE find_floor_buttons
 FOR EACH CallButton IN CallButtons
 return find_floor_buttons
+END SEQUENCE
