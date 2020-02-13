@@ -1,7 +1,8 @@
 '---------------------- BUTTON CALL ELEVATOR-------------------------------
 SEQUENCE call_Elevator USING direction AND requested_floor
     CALL call_button WITH direction AND requested_floor RETURNING call_button_floor
-    CALL find_elevator WITH direction AND requested_floor RETURNING send_request
+    CALL find_elevator WITH direction AND requested_floor RETURNING elevator
+    CALL move with direction AND requested_floor
 END SEQUENCE
 
 '---------------------- FIND CALL BUTTON'-------------------------------
@@ -68,10 +69,3 @@ SEQUENCE move_elevator USING
 END SEQUENCE
 
 '---------------------- FLOOR BUTTONS INSIDE ELEVATOR ------------------------------------
-SEQUENCE floor_buttons USING direction AND floor
-    CALL find_floor_buttons WITH cage AND requested_floor RETURNING find_floor_buttons
-
-SEQUENCE find_floor_buttons
-    FOR EACH CallButton IN CallButtons
-        return find_floor_buttons
-END SEQUENCE
