@@ -95,7 +95,8 @@ SEQUENCE door USING elevator AND requested_floor
     IF obstruction THEN
     SET timer TO 5 seconds THEN
     SET door TO close
-    RETURN door_activation
+    CALL weight_check WITH elevator 
+    RETURN door
 END SEQUENCE
 
 '---------------------- MOVE ELEVATOR -------------------------------
@@ -113,7 +114,7 @@ SEQUENCE move USING direction AND requested_floor
     INCREMENT elevator_floor by - 1
     UNTIL elevator_floor EQUAL TO requested_floor
 
-    CALL door WITH elevator AND requested_floor RETURNING door_activation
+    CALL door WITH elevator AND requested_floor RETURNING door
 
     END IF
 END SEQUENCE
@@ -123,10 +124,18 @@ END SEQUENCE
 
 SEQUENCE weight_check USING elevator
   READ weight FROM weight sensor
-  IF weight is > Than maximum weight THEN
+  IF weight is > than maximum weight THEN
   CALL door WITH elevator AND requested_floor
-  DISPLAY overweight warning signal 
+  DISPLAY overweight_warning_alert
   UNTIL weight is < Than maximum weight THEN 
   CALL door WITH elevator AND requested_floor
+
+END SEQUENCE
+
+'---------------------- RETURN TO ORIGIN ----------------------------------
+SEQUENCE return_to_origin USING elevator
+
+IF elevator is not use since 15 minutes THEN 
+SET elevator to origin positon WITH elevator
 
 END SEQUENCE

@@ -1,3 +1,10 @@
+'-------DEFAULT PARAMETERS-------'
+
+SEQUENCE Initialize
+  SET maximum capacity to 3 500 lbs
+  SET overweight_warning_alert to Overweigt Capacity
+END SEQUENCE
+
 '---------------------- BUTTON CALL ELEVATOR-------------------------------
 SEQUENCE call_Elevator USING direction AND requested_floor
     CALL Call_buttons WITH direction AND requested_floor RETURNING requested_floor
@@ -54,13 +61,15 @@ RETURN nearest_elevator
 SEQUENCE door USING elevator AND requested_floor
     SET door TO open THEN
     SET timer TO 5 seconds THEN
-
+    
     IF no obstruction THEN
     CALL close_door
 
     ELSE IF obstruction THEN
     SET timer TO 5 seconds THEN
     SET door TO close
+    CALL weight_check WITH elevator 
+    RETURN door
 END SEQUENCE
 
 '---------------------- MOVE ELEVATOR -------------------------------
@@ -78,7 +87,7 @@ SEQUENCE move USING direction AND requested_floor
     INCREMENT elevator_floor by - 1
     UNTIL elevator_floor EQUAL to requested_floor
 
-    CALL door WITH elevator AND requested_floor  RETURNING door_open
+    CALL door WITH elevator AND requested_floor  RETURNING door
     
     END IF
 END SEQUENCE
@@ -96,10 +105,18 @@ END SEQUENCE
 
 SEQUENCE weight_check USING elevator
   READ weight FROM weight sensor
-  IF weight is > Than maximum weight THEN
+  IF weight is > than maximum weight THEN
   CALL door WITH elevator AND requested_floor
-  DISPLAY overweight warning signal 
+  DISPLAY overweight_warning_alert
   UNTIL weight is < Than maximum weight THEN 
   CALL door WITH elevator AND requested_floor
+
+END SEQUENCE
+
+'---------------------- RETURN TO ORIGIN ----------------------------------
+SEQUENCE return_to_origin USING elevator
+
+IF elevator is not use since 15 minutes THEN 
+SET elevator to origin positon WITH elevator
 
 END SEQUENCE
