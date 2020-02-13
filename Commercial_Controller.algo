@@ -29,6 +29,7 @@ END SEQUENCE
 SEQUENCE batteries USING column AND requested_floor
   CALL find_column WITH direction AND requested_floor 
   RETURNING column
+END SEQUENCE
 
 '---------------------- FIND COLUMN -------------------------------
 SEQUENCE find_column USING elevator_floor AND requested_floor
