@@ -22,9 +22,13 @@ SEQUENCE find_column USING elevator_floor AND requested_floor
 
 ' wich floor every column serve '
   WHILE x = 1, x IS < number of column
-
+    'the columns maximum floor to reach is equal to 1 * average floor per column'
     column number maximum floor to reach = x * average floor per column
+    
+    'the columns minimum floor to reach is equal to the last maximum floor to reach - average floor per column'
     column number minimun floor to reach = maximum - average floor per column
+    
+    'x from the while loop is +=1 everytime'
     x += 1
     
       RETURN column
