@@ -1,7 +1,7 @@
 '---------------------- BUTTON CALL ELEVATOR-------------------------------
 SEQUENCE call_Elevator USING direction AND requested_floor
-    CALL call_button WITH direction AND requested_floor #ING requested_floor
-    CALL find_column WITH direction AND requested_floor RETURNING column
+    CALL call_button WITH direction AND requested_floor RETURNING requested_floor
+    CALL batteries with column AND requested_floor RETURNING column
     CALL find_elevator WITH column AND direction AND requested_floor RETURNING elevator
     CALL move with direction AND requested_floor
 END SEQUENCE
@@ -14,20 +14,26 @@ SEQUENCE call_button USING direction AND requested_floor
     END FOR
 END SEQUENCE
 
+'---------------------- BATTERIES -------------------------------
+SEQUENCE batteries USING column AND requested_floor
+  CALL find_column WITH direction AND requested_floor 
+  RETURNING column
+
 '---------------------- FIND COLUMN -------------------------------
 SEQUENCE find_column USING elevator_floor AND requested_floor
 
   total_floor - total_basement / (total_column - 1) = average floor per column
 
-
 ' wich floor every column serve '
-  WHILE x = 1, x IS < number of column
+  x = 1
+  WHILE x IS < number of column
+
     'the columns maximum floor to reach is equal to 1 * average floor per column'
     column number maximum floor to reach = x * average floor per column
     
     'the columns minimum floor to reach is equal to the last maximum floor to reach - average floor per column'
     column number minimun floor to reach = maximum - average floor per column
-    
+
     'x from the while loop is +=1 everytime'
     x += 1
     
@@ -64,7 +70,7 @@ SEQUENCE find_elevator USING column AND direction AND requested_floor
            RETURN nearest_elevator
 
       ELSE elevator_not_busy THEN
-        CALL nearest_elevator WITH requested_floor AND direction
+        CALL nearest_elevator WITH requested_floor AND direction RETURNING nearest_elevator
            RETURN elevator
 
         END IF
@@ -75,6 +81,7 @@ END SEQUENCE
 SEQUENCE nearest_elevator WITH requested_floor AND direction 
     CALCULATE difference between requested_floor AND elevator_floor
 RETURN nearest_elevator
+
 '---------------------- DOORS -------------------------------
 SEQUENCE door USING elevator AND requested_floor
     SET door TO open
@@ -98,15 +105,28 @@ SEQUENCE move USING direction AND requested_floor
     REPEAT
 
     INCREMENT elevator_floor by 1
-    UNTIL elevator_floor EQUAL to floor
+    UNTIL elevator_floor EQUAL TO floor
 
     ELSE IF elevator_floor GREATER THAN requested_floor THEN
     REPEAT
 
     INCREMENT elevator_floor by - 1
-    UNTIL elevator_floor EQUAL to requested_floor
+    UNTIL elevator_floor EQUAL TO requested_floor
 
     CALL door WITH elevator AND requested_floor RETURNING door_activation
 
     END IF
+END SEQUENCE
+
+
+'---------------------- OVER WEIGHT WARNING -------------------------------
+
+SEQUENCE weight_check USING elevator
+  READ weight FROM weight sensor
+  IF weight is > Than maximum weight THEN
+  CALL door WITH elevator AND requested_floor
+  DISPLAY overweight warning signal 
+  UNTIL weight is < Than maximum weight THEN 
+  CALL door WITH elevator AND requested_floor
+
 END SEQUENCE

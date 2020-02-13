@@ -1,16 +1,8 @@
 '---------------------- BUTTON CALL ELEVATOR-------------------------------
 SEQUENCE call_Elevator USING direction AND requested_floor
-    CALL call_button WITH direction AND requested_floor RETURNING requested_floor
+    CALL floor_buttons WITH direction AND requested_floor RETURNING requested_floor
     CALL find_elevator WITH direction AND requested_floor RETURNING elevator
     CALL move with direction AND requested_floor AND elevator
-END SEQUENCE
-
-'---------------------- FIND CALL BUTTON'-------------------------------
-SEQUENCE call_button USING direction AND requested_floor
-        SET call_button TO direction AND requested_floor
-        ADD requested_floor TO elevator_queue
-            return requested_floor
-    END FOR
 END SEQUENCE
 
 '---------------------- fIND ELEVATOR -------------------------------
@@ -40,7 +32,7 @@ SEQUENCE find_elevator USING direction AND requested_floor
                 RETURN nearest_elevator
 
         ELSE elevator_not_busy THEN
-            CALL nearest_elevator WITH requested_floor AND direction
+            CALL nearest_elevator WITH requested_floor AND direction RETURNING nearest_elevator
                 RETURN elevator
 
         END IF
@@ -54,15 +46,13 @@ RETURN nearest_elevator
 
 '---------------------- DOORS -------------------------------
 SEQUENCE door USING elevator AND requested_floor
-    SET door TO open
-
-    IF door is open THEN
+    SET door TO open THEN
     SET timer TO 5 seconds THEN
 
     IF no obstruction THEN
     CALL close_door
 
-    IF obstruction THEN
+    ELSE IF obstruction THEN
     SET timer TO 5 seconds THEN
     SET door TO close
 END SEQUENCE
@@ -90,9 +80,20 @@ END SEQUENCE
 '---------------------- FLOOR BUTTONS INSIDE ELEVATOR ------------------------------------
 SEQUENCE floor_buttons USING direction AND requested_floor
     CALL find_floor_buttons WITH direction AND requested_floor RETURNING find_floor_buttons THEN
-    CALL move WITH direction AND requested_floor
 
 SEQUENCE find_floor_buttons WITH direction AND requested_floor
     FOR EACH CallButton IN CallButtons
         return find_floor_buttons
+END SEQUENCE
+
+'---------------------- OVER WEIGHT WARNING -------------------------------
+
+SEQUENCE weight_check USING elevator
+  READ weight FROM weight sensor
+  IF weight is > Than maximum weight THEN
+  CALL door WITH elevator AND requested_floor
+  DISPLAY overweight warning signal 
+  UNTIL weight is < Than maximum weight THEN 
+  CALL door WITH elevator AND requested_floor
+
 END SEQUENCE
