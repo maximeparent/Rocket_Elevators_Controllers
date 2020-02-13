@@ -1,20 +1,21 @@
 '---------------------- BUTTON CALL ELEVATOR-------------------------------
 SEQUENCE call_Elevator USING direction AND requested_floor
-    CALL call_button WITH direction AND requested_floor RETURNING call_button_floor
+    CALL call_button WITH direction AND requested_floor RETURNING requested_floor
     CALL find_elevator WITH direction AND requested_floor RETURNING elevator
-    CALL move with direction AND requested_floor AND column
+    CALL move with direction AND requested_floor AND elevator
 END SEQUENCE
 
 '---------------------- FIND CALL BUTTON'-------------------------------
 SEQUENCE call_button USING direction AND requested_floor
-        SET call_button to direction_requested
-            return call_button_floor
+        SET call_button TO direction AND requested_floor
+        ADD requested_floor TO elevator_queue
+            return requested_floor
     END FOR
 END SEQUENCE
 
 '---------------------- fIND ELEVATOR -------------------------------
 SEQUENCE find_elevator USING direction AND requested_floor
-    FOR EACH elevator in elevatorList
+    FOR EACH elevator in elevator_list
 
         IF requested_floor = elevator_floor AND elevator_not_busy THEN
             RETURN elevator
@@ -22,7 +23,7 @@ SEQUENCE find_elevator USING direction AND requested_floor
         ELSE IF requested_floor = elevator_floor AND direction = elevator_direction THEN
             RETURN elevator
 
-        ELSE IF requested_floor > elevator_floo AND elevator is moving in same direction THEN
+        ELSE IF requested_floor > elevator_floor AND elevator is moving in same direction THEN
             CALL nearest_elevator WITH  requested_floor AND direction RETURNING nearest_elevator
                 RETURN nearest_elevator
 
@@ -34,11 +35,11 @@ SEQUENCE find_elevator USING direction AND requested_floor
             CALL nearest_elevator WITH requested_floor AND direction RETURNING nearest_elevator
                 RETURN nearest_elevator
 
-             ELSE IF requested_floor < elevator_floor THEN
+        ELSE IF requested_floor < elevator_floor THEN
              CALL nearest_elevator WITH requested_floor AND direction RETURNING nearest_elevator
                 RETURN nearest_elevator
 
-        ELSE IF elevator_not_busy THEN
+        ELSE elevator_not_busy THEN
             CALL nearest_elevator WITH requested_floor AND direction
                 RETURN elevator
 
@@ -53,32 +54,36 @@ RETURN nearest_elevator
 
 '---------------------- DOORS -------------------------------
 SEQUENCE door USING elevator AND requested_floor
-    SET door to open
+    SET door TO open
 
     IF door is open THEN
-    SET timer to 5 seconds THEN
+    SET timer TO 5 seconds THEN
 
     IF no obstruction THEN
     CALL close_door
 
     IF obstruction THEN
-    SET timer to 5 seconds THEN
-    CALL close_door
+    SET timer TO 5 seconds THEN
+    SET door TO close
 END SEQUENCE
 
 '---------------------- MOVE ELEVATOR -------------------------------
-SEQUENCE move_elevator USING direction AND requested_floor AND column
-
+SEQUENCE move USING direction AND requested_floor
+    
     IF elevator_floor LESS THAN requested_floor THEN
     REPEAT
+
     INCREMENT elevator_floor by 1
     UNTIL elevator_floor EQUAL to floor
 
     ELSE IF elevator_floor GREATER THAN requested_floor THEN
     REPEAT
+
     INCREMENT elevator_floor by - 1
     UNTIL elevator_floor EQUAL to requested_floor
-    CALL door WITH elevator AND requested_floor
+
+    CALL door WITH elevator AND requested_floor  RETURNING door_open
+    
     END IF
 END SEQUENCE
 
