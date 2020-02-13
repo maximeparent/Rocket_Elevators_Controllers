@@ -1,8 +1,11 @@
 '-------DEFAULT PARAMETERS-------'
-
-SEQUENCE Initialize
-  SET maximum capacity to 3 500 lbs
-  SET overweight_warning_alert to Overweigt Capacity
+SEQUENCE Initialize 
+  SET floors TO 10
+  SET columns TO 1
+  SET elevator TO 2
+  SET maximum capacity TO 3 500 lbs
+  SET overweight_warning_alert TO Overweigt Capacity
+  SET elevator_queue TO null
 END SEQUENCE
 
 '---------------------- BUTTON CALL ELEVATOR-------------------------------
@@ -15,6 +18,7 @@ END SEQUENCE
 SEQUENCE call_button USING direction AND requested_floor
         SET call_button TO direction AND requested_floor
         ADD requested_floor TO elevator_queue
+        
             return requested_floor
     END FOR
 END SEQUENCE
@@ -59,17 +63,23 @@ RETURN nearest_elevator
 
 '---------------------- DOORS -------------------------------
 SEQUENCE door USING elevator AND requested_floor
-    SET door TO open THEN
+    SET door TO open
+
+    IF door is open THEN
     SET timer TO 5 seconds THEN
-    
+
     IF no obstruction THEN
     CALL close_door
 
-    ELSE IF obstruction THEN
+    IF obstruction THEN
     SET timer TO 5 seconds THEN
     SET door TO close
-    CALL weight_check WITH elevator 
-    RETURN door
+    END IF
+
+    IF elevator_queue is empty THEN
+    CALL return_to_origin WITH elevator
+    END IF
+    
 END SEQUENCE
 
 '---------------------- MOVE ELEVATOR -------------------------------
@@ -87,8 +97,7 @@ SEQUENCE move USING direction AND requested_floor
     INCREMENT elevator_floor by - 1
     UNTIL elevator_floor EQUAL to requested_floor
 
-    CALL door WITH elevator AND requested_floor  RETURNING door
-    
+    CALL door WITH elevator AND requested_floor
     END IF
 END SEQUENCE
 
@@ -116,7 +125,7 @@ END SEQUENCE
 '---------------------- RETURN TO ORIGIN ----------------------------------
 SEQUENCE return_to_origin USING elevator
 
-IF elevator is not use since 15 minutes THEN 
+IF elevator is not use since 10 minutes THEN 
 SET elevator to origin positon WITH elevator
 
 END SEQUENCE
