@@ -9,6 +9,7 @@ SEQUENCE Initialize
   SET maximum capacity TO 3 500 lbs
   SET overweight_warning_alert TO Overweigt Capacity
   SET elevator_queue TO null
+  SET elevator origin position TO 1 
 END SEQUENCE
 
 '---------------------- BUTTON CALL ELEVATOR-------------------------------
