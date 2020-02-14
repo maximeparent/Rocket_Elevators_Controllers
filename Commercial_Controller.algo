@@ -12,6 +12,7 @@ SEQUENCE Initialize
 END SEQUENCE
 
 '---------------------- BUTTON CALL ELEVATOR-------------------------------
+'When a user call an elevator trigger call button'
 SEQUENCE call_Elevator USING direction AND requested_floor
     CALL call_button WITH direction AND requested_floor RETURNING requested_floor
     CALL batteries with column AND requested_floor RETURNING column
@@ -20,19 +21,25 @@ SEQUENCE call_Elevator USING direction AND requested_floor
 END SEQUENCE
 
 '---------------------- FIND CALL BUTTON'-------------------------------
+'The request is receive then if there's more demand place the demand in queue and and in anny case it return requested floor'
 SEQUENCE call_button USING direction AND requested_floor
-        SET call_button TO direction AND requested_floor
+        READ direction AND requested_floor 
+        IF more than one request THEN 
         CALL queue WITH direction AND requested_floor RETURNING queue
         ADD requested_floor TO elevator_queue THEN
             return requested_floor
-    END FOR
 END SEQUENCE
 '----------------------QUEUE------------------------------------'
+'As long as there is someone inside or in front of the elevator who wants to go in the current direction, continue in that direction'
 SEQUENCE queue USING direction AND requested_floor
   WHILE queue in current direction THEN 
     ADD new request in same direction
       return queue
+  END WHILE
+END SEQUENCE
+
 '---------------------- BATTERIES -------------------------------
+'batterie receive the signal and call to find the best column for the users'
 SEQUENCE batteries USING column AND requested_floor
   CALL find_column WITH direction AND requested_floor 
   RETURNING column
@@ -65,10 +72,6 @@ END SEQUENCE
 SEQUENCE find_elevator USING column AND direction AND requested_floor
 
   FOR EACH elevator in elevator_list
-
-  WHILE queue in current direction THEN 
-    add new request in same direction
-      return elevator
 
 'if elevator is at the same floor and not busy'
     IF requested_floor = elevator_floor AND elevator is idle THEN
@@ -104,29 +107,29 @@ SEQUENCE find_elevator USING column AND direction AND requested_floor
            RETURN elevator
 
         END IF
-    END EACH
 END SEQUENCE
 
 '---------------------- NEAREST ELEVATOR -------------------------------
 SEQUENCE nearest_elevator WITH requested_floor AND direction 
     CALCULATE difference between requested_floor AND elevator_floor
 RETURN nearest_elevator
+END SEQUENCE
 
 '---------------------- DOORS -------------------------------
+'open door for 5 sec then check if the sensor detect obstruction if yes open door for 5 sec if not close door  '
 SEQUENCE door USING elevator AND requested_floor
     SET door TO open
-
-    IF door is open THEN
     SET timer TO 5 seconds THEN
+    CALL weight_check with sensor RETURNING weight_check
 
     IF no obstruction THEN
     CALL close_door
 
-    IF obstruction THEN
+    ELSE obstruction THEN
     SET timer TO 5 seconds THEN
     SET door TO close
     END IF
-
+'if elevator queue is empty call the sequence return to origin'
     IF elevator_queue is empty THEN
     CALL return_to_origin WITH elevator
     END IF
@@ -135,14 +138,15 @@ END SEQUENCE
 
 '---------------------- MOVE ELEVATOR -------------------------------
 SEQUENCE move USING direction AND requested_floor
-    
-    IF elevator_floor LESS THAN requested_floor THEN
+    'If elevator is lower then requested floor then move up until elevator is equal to requested floor'
+    IF elevator_floor < requested_floor THEN
     REPEAT
 
     INCREMENT elevator_floor by 1
     UNTIL elevator_floor EQUAL TO floor
 
-    ELSE IF elevator_floor GREATER THAN requested_floor THEN
+  'Else if elevator is higher then requested floor then move down until elevator is equal to requested floor'
+    ELSE IF elevator_floor > requested_floor THEN
     REPEAT
 
     INCREMENT elevator_floor by - 1
@@ -154,22 +158,23 @@ SEQUENCE move USING direction AND requested_floor
 END SEQUENCE
 
 
-'---------------------- OVER WEIGHT WARNING -------------------------------
-
-SEQUENCE weight_check USING elevator
+'---------------------- OVERWEIGHT WARNING -------------------------------
+'If the sensor detect more thant maximum weight then display the message until weight in less tan maximum then open door '
+SEQUENCE weight_check USING sensor
   READ weight FROM weight sensor
   IF weight is > than maximum weight THEN
-  CALL door WITH elevator AND requested_floor
   DISPLAY overweight_warning_alert
   UNTIL weight is < Than maximum weight THEN 
-  CALL door WITH elevator AND requested_floor
+  SET door TO open
+  RETURN weight_check
 
 END SEQUENCE
 
 '---------------------- RETURN TO ORIGIN ----------------------------------
+'If elevator is not use since 15 min then set the elevator to origin position wich is floor 1'
 SEQUENCE return_to_origin USING elevator
 
 IF elevator is not use since 15 minutes THEN 
 SET elevator to origin positon WITH elevator
-
+ENDIF
 END SEQUENCE
