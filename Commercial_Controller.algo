@@ -1,9 +1,11 @@
 '-------DEFAULT PARAMETERS-------'
 'parameters by default when elevator start'
 SEQUENCE Initialize 
-  SET floors TO 10
-  SET columns TO 1
-  SET elevator TO 2
+  SET floors TO 66
+  SET columns TO 4
+  SET elevator TO 12
+  SET sensor for maximum capacity
+  SET sensor for doors obstruction
   SET maximum capacity TO 3 500 lbs
   SET overweight_warning_alert TO Overweigt Capacity
   SET elevator_queue TO null
@@ -20,11 +22,16 @@ END SEQUENCE
 '---------------------- FIND CALL BUTTON'-------------------------------
 SEQUENCE call_button USING direction AND requested_floor
         SET call_button TO direction AND requested_floor
-        ADD requested_floor TO elevator_queue
+        CALL queue WITH direction AND requested_floor RETURNING queue
+        ADD requested_floor TO elevator_queue THEN
             return requested_floor
     END FOR
 END SEQUENCE
-
+'----------------------QUEUE------------------------------------'
+SEQUENCE queue USING direction AND requested_floor
+  WHILE queue in current direction THEN 
+    ADD new request in same direction
+      return queue
 '---------------------- BATTERIES -------------------------------
 SEQUENCE batteries USING column AND requested_floor
   CALL find_column WITH direction AND requested_floor 
@@ -36,17 +43,17 @@ SEQUENCE find_column USING elevator_floor AND requested_floor
 
   total_floor - total_basement / (total_column - 1) = average floor per column
 
-' wich floor every column serve '
+' Wich floor every column serve '
   x = 1
   WHILE x IS < number of column
 
-    'the columns maximum floor to reach is equal to 1 * average floor per column'
+    'The columns maximum floor to reach is equal to 1 * by average floor per column'
     column number maximum floor to reach = x * average floor per column
     
-    'the columns minimum floor to reach is equal to the last maximum floor to reach - average floor per column'
+    'The columns minimum floor to reach is equal to the last maximum floor to reach - average floor per column'
     column number minimun floor to reach = maximum - average floor per column
 
-    'x from the while loop is +=1 everytime'
+    'x from the while loop is +=1 everytime' 
     x += 1
     
       RETURN column
@@ -59,28 +66,39 @@ SEQUENCE find_elevator USING column AND direction AND requested_floor
 
   FOR EACH elevator in elevator_list
 
-    IF requested_floor = elevator_floor AND elevator_not_busy THEN
+  WHILE queue in current direction THEN 
+    add new request in same direction
+      return elevator
+
+'if elevator is at the same floor and not busy'
+    IF requested_floor = elevator_floor AND elevator is idle THEN
+      RETURN elevator
+  
+'if the requested floor is the same as the elevator and the elevator current direction'
+    ELSE IF requested_floor = elevator_floor AND elevator_direction
       RETURN elevator
 
-    ELSE IF requested_floor = elevator_floor AND direction = elevator_direction THEN
-      RETURN elevator
+'if requested floor is higher and not busy than call the nearest elevator'
+      ELSE IF requested_floor > elevator_floor AND idle THEN
+        CALL nearest_elevator WITH requested_floor AND direction RETURNING nearest_elevator
+          RETURN nearest_elevator
 
+'if requested floor is lower andnot busy than call the nearest elevator'
+      ELSE IF requested_floor < elevator_floor AND idle THEN
+        CALL nearest_elevator WITH requested_floor AND direction RETURNING nearest_elevator
+           RETURN nearest_elevator
+
+'if requested floor is higher then the elevator and the elevator is moving in the same direction then call the nearest'
     ELSE IF requested_floor > elevator_floor AND elevator is moving in same direction THEN
       CALL nearest_elevator WITH  requested_floor AND direction RETURNING nearest_elevator
           RETURN nearest_elevator
 
+'if requested floor is lower then the elevator and the elevator is moving in the same direction then call the nearest'
       ELSE IF requested_floor < elevator_floor AND elevator is moving in same direction THEN
         CALL nearest_elevator WITH  requested_floor AND direction RETURNING nearest_elevator
           RETURN nearest_elevator
 
-      ELSE IF requested_floor > elevator_floor THEN
-        CALL nearest_elevator WITH requested_floor AND direction RETURNING nearest_elevator
-          RETURN nearest_elevator
-
-      ELSE IF requested_floor < elevator_floor THEN
-        CALL nearest_elevator WITH requested_floor AND direction RETURNING nearest_elevator
-           RETURN nearest_elevator
-
+'if elevator not busy then call nearest elevator'
       ELSE elevator_not_busy THEN
         CALL nearest_elevator WITH requested_floor AND direction RETURNING nearest_elevator
            RETURN elevator
