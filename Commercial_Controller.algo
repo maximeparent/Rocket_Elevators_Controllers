@@ -40,10 +40,10 @@ END SEQUENCE
 
 '---------------------- FIND COLUMN -------------------------------
 SEQUENCE find_column USING elevator_floor AND requested_floor
-
+'calcul to find the average floor by column '
   total_floor - total_basement / (total_column - 1) = average floor per column
 
-' Wich floor every column serve '
+' x is the first floor  '
   x = 1
   WHILE x IS < number of column
 
