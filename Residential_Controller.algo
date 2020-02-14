@@ -83,7 +83,7 @@ END SEQUENCE
 '---------------------- NEAREST ELEVATOR -------------------------------
 SEQUENCE nearest_elevator WITH requested_floor AND direction 
     CALCULATE difference between requested_floor AND elevator_floor
-RETURN nearest_elevator
+        RETURN nearest_elevator
 END SEQUENCE
 
 '---------------------- DOORS -------------------------------
@@ -158,7 +158,7 @@ END SEQUENCE
 'If elevator is not use since 15 min then set the elevator to origin position wich is floor 1'
 SEQUENCE return_to_origin USING elevator
 
-IF elevator is not use since 15 minutes THEN 
-SET elevator to origin positon WITH elevator
+    IF elevator is not use since 15 minutes THEN 
+    SET elevator to origin positon WITH elevator
 
 END SEQUENCE
