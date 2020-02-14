@@ -81,6 +81,7 @@ END SEQUENCE
 
 
 '---------------------- NEAREST ELEVATOR -------------------------------
+'calculate difference between requested floor AND elevator current floor'
 SEQUENCE nearest_elevator WITH requested_floor AND direction 
     CALCULATE difference between requested_floor AND elevator_floor
         RETURN nearest_elevator

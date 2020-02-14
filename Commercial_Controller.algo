@@ -16,13 +16,13 @@ END SEQUENCE
 'When a user call an elevator trigger call button'
 SEQUENCE call_Elevator USING direction AND requested_floor
     CALL call_button WITH direction AND requested_floor RETURNING requested_floor
-    CALL batteries with column AND requested_floor RETURNING column
+    CALL batterie with column AND requested_floor RETURNING column
     CALL find_elevator WITH column AND direction AND requested_floor RETURNING elevator
     CALL move with direction AND requested_floor
 END SEQUENCE
 
 '---------------------- FIND CALL BUTTON'-------------------------------
-'The request is receive then if there's more demand place the demand in queue'
+'The request is receive then if there's more demand, place the demand in queue'
 SEQUENCE call_button USING direction AND requested_floor
         READ direction AND requested_floor 
         IF more than one request THEN 
@@ -41,7 +41,7 @@ END SEQUENCE
 
 '---------------------- BATTERIES -------------------------------
 'batterie receive the signal and call to find the best column for the users'
-SEQUENCE batteries USING column AND requested_floor
+SEQUENCE batterie USING column AND requested_floor
   CALL find_column WITH direction AND requested_floor 
   RETURNING column
 END SEQUENCE
@@ -54,14 +54,15 @@ SEQUENCE find_column USING elevator_floor AND requested_floor
 ' x is the first floor  '
   x = 1
   WHILE x IS < number of column
+'It calculate what minimum floor to the maximum floor to serve'
 
-    'The columns maximum floor to reach is equal to 1 * by average floor per column'
+' calcul: The columns maximum floor to reach is equal to 1 * by average floor per column'
     column number maximum floor to reach = x * average floor per column
     
-    'The columns minimum floor to reach is equal to the last maximum floor to reach - average floor per column'
+' calcul: The columns minimum floor to reach is equal to the last maximum floor to reach - average floor per column'
     column number minimun floor to reach = maximum - average floor per column
 
-    'x from the while loop is +=1 everytime' 
+'x from the while loop is +=1 everytime' 
     x += 1
     
       RETURN column
@@ -111,6 +112,7 @@ SEQUENCE find_elevator USING column AND direction AND requested_floorF
 END SEQUENCE
 
 '---------------------- NEAREST ELEVATOR -------------------------------
+'calculate difference between requested floor AND elevator current floor'
 SEQUENCE nearest_elevator WITH requested_floor AND direction 
     CALCULATE difference between requested_floor AND elevator_floor
       RETURN nearest_elevator
@@ -139,7 +141,7 @@ END SEQUENCE
 
 '---------------------- MOVE ELEVATOR -------------------------------
 SEQUENCE move USING direction AND requested_floor
-    'If elevator is lower then requested floor then move up until elevator is equal to requested floor'
+  'If elevator is lower then requested floor then move up until elevator is equal to requested floor'
     IF elevator_floor < requested_floor THEN
     REPEAT
 
