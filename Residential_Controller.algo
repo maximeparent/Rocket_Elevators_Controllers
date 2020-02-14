@@ -150,7 +150,7 @@ SEQUENCE weight_check USING sensor
   DISPLAY overweight_warning_alert
   UNTIL weight is < Than maximum weight THEN 
   SET door TO open
-  RETURN weight_check
+    RETURN weight_check
 
 END SEQUENCE
 
