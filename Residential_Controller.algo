@@ -133,8 +133,8 @@ END SEQUENCE
 SEQUENCE floor_buttons USING direction AND requested_floor
     CALL find_floor_buttons WITH direction AND requested_floor
 
-'trigger with choosen floor'
-SEQUENCE find_floor_buttons WITH direction AND requested_floor
+'trigger with choosen floor then with diretion, requested floor and queue'
+SEQUENCE find_floor_buttons WITH direction AND requested_floor AND queue
     FOR EACH call_button IN call_buttons
         return requested_floor
     CALL move WITH direction AND requested_floor

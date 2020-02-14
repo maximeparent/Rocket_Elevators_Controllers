@@ -21,7 +21,7 @@ SEQUENCE call_Elevator USING direction AND requested_floor
 END SEQUENCE
 
 '---------------------- FIND CALL BUTTON'-------------------------------
-'The request is receive then if there's more demand place the demand in queue and and in anny case it return requested floor'
+'The request is receive then if there's more demand place the demand in queue'
 SEQUENCE call_button USING direction AND requested_floor
         READ direction AND requested_floor 
         IF more than one request THEN 
