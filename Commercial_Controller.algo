@@ -1,5 +1,5 @@
 '-------DEFAULT PARAMETERS-------'
-'parameters by default when elevator start'
+'parameters by default when elevator start or reset'
 SEQUENCE Initialize 
   SET floors TO 66
   SET columns TO 4
@@ -42,8 +42,7 @@ END SEQUENCE
 '---------------------- BATTERIES -------------------------------
 'batterie receive the signal and call to find the best column for the users'
 SEQUENCE batterie USING column AND requested_floor
-  CALL find_column WITH direction AND requested_floor 
-  RETURNING column
+  CALL find_column WITH direction AND requested_floor RETURNING column
 END SEQUENCE
 
 '---------------------- FIND COLUMN -------------------------------
@@ -141,14 +140,14 @@ END SEQUENCE
 
 '---------------------- MOVE ELEVATOR -------------------------------
 SEQUENCE move USING direction AND requested_floor
-  'If elevator is lower then requested floor then move up until elevator is equal to requested floor'
+  'If elevator is lower then requested floor then move elevator up by 1 until elevator is equal to requested floor'
     IF elevator_floor < requested_floor THEN
     REPEAT
 
     INCREMENT elevator_floor by 1
     UNTIL elevator_floor EQUAL TO floor
 
-  'Else if elevator is higher then requested floor then move down until elevator is equal to requested floor'
+  'Else if elevator is higher then requested floor then move elevator down by -1 down until elevator is equal to requested floor'
     ELSE IF elevator_floor > requested_floor THEN
     REPEAT
 
