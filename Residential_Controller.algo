@@ -23,7 +23,6 @@ END SEQUENCE
 'The request is receive then if there's more demand, place the demand in queue'
 SEQUENCE call_button USING direction AND requested_floor
         READ direction AND requested_floor 
-        IF more than one request THEN 
         CALL queue WITH direction AND requested_floor RETURNING queue
         ADD requested_floor TO elevator_queue THEN
             return requested_floor
