@@ -207,18 +207,6 @@ namespace myapp
     bestElevator.moveToUserCurrentFloor(userCurrentFloor);
     bestElevator.moveToRequestedFloor(requestedFloor);
 
-    // if (userCurrentFloor == 1 && direction == "up") {
-    //     bestElevator.moveToUserCurrentFloor(1);
-    //     bestElevator.moveToRequestedFloor(requestedFloor);
-
-    // }
-
-    // if (userCurrentFloor != 1 ){
-
-    //     bestElevator.moveToUserCurrentFloor(userCurrentFloor);
-    //     bestElevator.moveToRequestedFloor(1);
-   
-    // }
          return bestElevator;
     }
 } 

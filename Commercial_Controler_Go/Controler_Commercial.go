@@ -31,9 +31,6 @@ func main() {
 	elevator19 := Elevator{19, 1, "up", []int{}}
 	elevator20 := Elevator{20, 60, "down", []int{}}
 
-	// elevatorOne.moveToRequestedFloor(5)
-	// elevatorTwo.moveToRequestedFloor(6)
-
 	columnOne := Column{1, 1, -6, []Elevator{}}
 	columnTwo := Column{2, 20, 2, []Elevator{}}
 	columnthree := Column{3, 40, 21, []Elevator{}}
@@ -93,7 +90,6 @@ func (battery Battery) requestElevator(requestedFloor int, direction string, use
 		fmt.Println("Elevator choosen is : ", elevatorFinded.id)
 		return elevatorFinded
 	}
-	// calling function ElevatorInTheChosenColumn
 }
 
 // -------- ELevator move -------------
