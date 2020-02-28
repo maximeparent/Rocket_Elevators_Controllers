@@ -17,17 +17,35 @@ namespace myapp
     }
     //  Request Elevator by user
     public Elevator requestElevator(int requestedFloor, String direction, int userCurrentFloor){
-        // calling function columnToFind
-        Column columnFinded = this.columnToFind(requestedFloor);
-        // calling function ElevatorInTheChosenColumn
-        Elevator elevatorFinded = columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor);
-        Console.WriteLine("Elevator choosen is : " + elevatorFinded.id);  
-        return elevatorFinded;
+        
+        if(userCurrentFloor != 1) {
+            Column columnFinded = this.columnToFinduserCurrentFloor(userCurrentFloor);
+                // calling function ElevatorInTheChosenColumn
+                Elevator elevatorFinded = columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor);
+                Console.WriteLine("Elevator choosen is : " + elevatorFinded.id);  
+                return elevatorFinded;
+        }
+        else{
+            Column columnFinded = this.columnToFindrequestedFloor(requestedFloor);
+                // calling function ElevatorInTheChosenColumn
+                Elevator elevatorFinded = columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor);
+                Console.WriteLine("Elevator choosen is : " + elevatorFinded.id);  
+                return elevatorFinded;
+        }
 
     }
     
     //  If the requested floor is between max floor and min floor return right column repeat for each column in listColumnInBattery
-    public Column columnToFind(int requestedFloor){
+    public Column columnToFinduserCurrentFloor(int userCurrentFloor){
+        foreach(Column column in listColumnInBattery){
+        if (userCurrentFloor <= column.maxFloor && userCurrentFloor >= column.minFloor){
+            Console.WriteLine("The choosen column is " + column.id);
+            return column;
+         }
+        }
+            return listColumnInBattery[0];
+    }
+        public Column columnToFindrequestedFloor(int requestedFloor){
         foreach(Column column in listColumnInBattery){
         if (requestedFloor <= column.maxFloor && requestedFloor >= column.minFloor){
             Console.WriteLine("The choosen column is " + column.id);
@@ -186,20 +204,21 @@ namespace myapp
                 }       
             }  
         }
+    bestElevator.moveToUserCurrentFloor(userCurrentFloor);
+    bestElevator.moveToRequestedFloor(requestedFloor);
 
+    // if (userCurrentFloor == 1 && direction == "up") {
+    //     bestElevator.moveToUserCurrentFloor(1);
+    //     bestElevator.moveToRequestedFloor(requestedFloor);
 
-    if (userCurrentFloor == 1 && direction == "up") {
-        bestElevator.moveToUserCurrentFloor(1);
-        bestElevator.moveToRequestedFloor(requestedFloor);
+    // }
 
-    }
+    // if (userCurrentFloor != 1 ){
 
-    if (userCurrentFloor != 1 ){
-
-        bestElevator.moveToUserCurrentFloor(requestedFloor);
-        bestElevator.moveToRequestedFloor(1);
+    //     bestElevator.moveToUserCurrentFloor(userCurrentFloor);
+    //     bestElevator.moveToRequestedFloor(1);
    
-    }
+    // }
          return bestElevator;
     }
 } 
@@ -328,10 +347,10 @@ namespace myapp
             batteryOne.requestElevator(36, "up", 1);
             Console.WriteLine("  ");
 // ------------------------------- SCENARIO 3 -------------------------------------------------
-            batteryOne.requestElevator(54, "down", 1);
+            batteryOne.requestElevator(1, "down", 54);
             Console.WriteLine("  ");
 // ------------------------------- SCENARIO 4 -------------------------------------------------
-            batteryOne.requestElevator(-3, "down", 1);
+            batteryOne.requestElevator(1, "up", -3);
             Console.WriteLine("  ");
         }
     }

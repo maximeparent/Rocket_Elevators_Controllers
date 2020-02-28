@@ -76,17 +76,24 @@ func main() {
 	fmt.Println("")
 	batteryOne.requestElevator(1, "down", 54)
 	fmt.Println("")
-	batteryOne.requestElevator(1, "down", -3)
+	batteryOne.requestElevator(1, "up", -3)
 }
 
+// Request Elevator From user
 func (battery Battery) requestElevator(requestedFloor int, direction string, userCurrentFloor int) Elevator {
 
-	// calling function columnToFindbest
-	columnFinded := battery.columnToFind(requestedFloor)
+	if direction == "down" {
+		columnFinded := battery.columnToFindUserCurrentFloor(userCurrentFloor)
+		elevatorFinded := columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor)
+		fmt.Println("Elevator choosen is : ", elevatorFinded.id)
+		return elevatorFinded
+	} else {
+		columnFinded := battery.columnToFindRequestedFloor(requestedFloor)
+		elevatorFinded := columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor)
+		fmt.Println("Elevator choosen is : ", elevatorFinded.id)
+		return elevatorFinded
+	}
 	// calling function ElevatorInTheChosenColumn
-	elevatorFinded := columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor)
-	fmt.Println("Elevator choosen is : ", elevatorFinded.id)
-	return elevatorFinded
 }
 
 // -------- ELevator move -------------
@@ -110,7 +117,20 @@ func (elevator Elevator) moveToRequestedFloor(userCurrentFloor int) {
 	fmt.Println("Elevator", elevator.id, "is at the position", elevator.position)
 }
 
-func (battery Battery) columnToFind(requestedFloor int) Column {
+func (battery Battery) columnToFindUserCurrentFloor(userCurrentFloor int) Column {
+
+	for _, column := range battery.listColumnInBattery {
+		if userCurrentFloor <= column.maxFloor && userCurrentFloor >= column.minFloor {
+			fmt.Println("The choosen column is ", column.id)
+			return column
+		}
+
+	}
+
+	return battery.listColumnInBattery[0]
+}
+
+func (battery Battery) columnToFindRequestedFloor(requestedFloor int) Column {
 
 	for _, column := range battery.listColumnInBattery {
 		if requestedFloor <= column.maxFloor && requestedFloor >= column.minFloor {
