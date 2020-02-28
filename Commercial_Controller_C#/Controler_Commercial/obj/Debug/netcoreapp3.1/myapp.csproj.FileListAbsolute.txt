@@ -1,0 +1,11 @@
+C:\Users\kingk\Desktop\Odyssey_Week3\myapp\bin\Debug\netcoreapp3.1\myapp.exe
+C:\Users\kingk\Desktop\Odyssey_Week3\myapp\bin\Debug\netcoreapp3.1\myapp.deps.json
+C:\Users\kingk\Desktop\Odyssey_Week3\myapp\bin\Debug\netcoreapp3.1\myapp.runtimeconfig.json
+C:\Users\kingk\Desktop\Odyssey_Week3\myapp\bin\Debug\netcoreapp3.1\myapp.runtimeconfig.dev.json
+C:\Users\kingk\Desktop\Odyssey_Week3\myapp\bin\Debug\netcoreapp3.1\myapp.dll
+C:\Users\kingk\Desktop\Odyssey_Week3\myapp\bin\Debug\netcoreapp3.1\myapp.pdb
+C:\Users\kingk\Desktop\Odyssey_Week3\myapp\obj\Debug\netcoreapp3.1\myapp.csprojAssemblyReference.cache
+C:\Users\kingk\Desktop\Odyssey_Week3\myapp\obj\Debug\netcoreapp3.1\myapp.AssemblyInfoInputs.cache
+C:\Users\kingk\Desktop\Odyssey_Week3\myapp\obj\Debug\netcoreapp3.1\myapp.AssemblyInfo.cs
+C:\Users\kingk\Desktop\Odyssey_Week3\myapp\obj\Debug\netcoreapp3.1\myapp.dll
+C:\Users\kingk\Desktop\Odyssey_Week3\myapp\obj\Debug\netcoreapp3.1\myapp.pdb
