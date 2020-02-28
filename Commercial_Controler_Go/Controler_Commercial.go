@@ -82,7 +82,7 @@ func main() {
 func (battery Battery) requestElevator(requestedFloor int, direction string, userCurrentFloor int) Elevator {
 
 	// calling function columnToFindbest
-	columnFinded := battery.columnToFind(requestedFloor)
+	columnFinded := battery.columnToFind(userCurrentFloor)
 	// calling function ElevatorInTheChosenColumn
 	elevatorFinded := columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor)
 	fmt.Println("Elevator choosen is : ", elevatorFinded.id)
@@ -90,18 +90,18 @@ func (battery Battery) requestElevator(requestedFloor int, direction string, use
 }
 
 // -------- ELevator move -------------
-func (elevator Elevator) moveToRequestedFloor(requestedFloor int) {
+func (elevator Elevator) moveToRequestedFloor(userCurrentFloor int) {
 
-	if elevator.position > requestedFloor {
+	if elevator.position > userCurrentFloor {
 
-		for elevator.position > requestedFloor {
+		for elevator.position > userCurrentFloor {
 			elevator.position = elevator.position - 1
 
 		}
 	}
 
-	if elevator.position < requestedFloor {
-		for elevator.position < requestedFloor {
+	if elevator.position < userCurrentFloor {
+		for elevator.position < userCurrentFloor {
 
 			elevator.position = elevator.position + 1
 
