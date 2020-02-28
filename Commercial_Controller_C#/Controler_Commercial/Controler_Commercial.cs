@@ -18,7 +18,7 @@ namespace myapp
     //  Request Elevator by user
     public Elevator requestElevator(int requestedFloor, String direction, int userCurrentFloor){
         // calling function columnToFind
-        Column columnFinded = this.columnToFind(requestedFloor);
+        Column columnFinded = this.columnToFind(userCurrentFloor);
         // calling function ElevatorInTheChosenColumn
         Elevator elevatorFinded = columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor);
         Console.WriteLine("Elevator choosen is : " + elevatorFinded.id);  
@@ -27,9 +27,9 @@ namespace myapp
     }
     
     //  If the requested floor is between max floor and min floor return right column repeat for each column in listColumnInBattery
-    public Column columnToFind(int requestedFloor){
+    public Column columnToFind(int userCurrentFloor){
         foreach(Column column in listColumnInBattery){
-        if (requestedFloor <= column.maxFloor && requestedFloor >= column.minFloor){
+        if (userCurrentFloor <= column.maxFloor && userCurrentFloor >= column.minFloor){
             Console.WriteLine("The choosen column is " + column.id);
             return column;
          }
@@ -187,22 +187,22 @@ namespace myapp
             }  
         }
 
-
-    if (userCurrentFloor == 1 && direction == "up") {
-        bestElevator.moveToUserCurrentFloor(1);
+        bestElevator.moveToUserCurrentFloor(userCurrentFloor);
         bestElevator.moveToRequestedFloor(requestedFloor);
+    // if (userCurrentFloor == 1 && direction == "up") {
+    //     bestElevator.moveToUserCurrentFloor(1);
+    //     bestElevator.moveToRequestedFloor(requestedFloor);
 
-    }
+    // }
+    return bestElevator;
+    // if (userCurrentFloor != 1 ){
 
-    if (userCurrentFloor != 1 ){
-
-        bestElevator.moveToUserCurrentFloor(requestedFloor);
-        bestElevator.moveToRequestedFloor(1);
+    //     bestElevator.moveToUserCurrentFloor(requestedFloor);
+    //     bestElevator.moveToRequestedFloor(1);
    
     }
-         return bestElevator;
     }
-} 
+ 
 // ------------------- Class Elevator ---------------------------
     class Elevator{
         public int id;
@@ -328,7 +328,7 @@ namespace myapp
             batteryOne.requestElevator(36, "up", 1);
             Console.WriteLine("  ");
 // ------------------------------- SCENARIO 3 -------------------------------------------------
-            batteryOne.requestElevator(54, "down", 1);
+            batteryOne.requestElevator(1, "down", 54);
             Console.WriteLine("  ");
 // ------------------------------- SCENARIO 4 -------------------------------------------------
             batteryOne.requestElevator(-3, "down", 1);
