@@ -189,14 +189,14 @@ namespace myapp
 
 
     if (userCurrentFloor == 1 && direction == "up") {
-          bestElevator.theUserCurrentFloor(1);
+        bestElevator.moveToUserCurrentFloor(1);
         bestElevator.moveToRequestedFloor(requestedFloor);
 
     }
 
     if (userCurrentFloor != 1 ){
 
-        bestElevator.theUserCurrentFloor(requestedFloor);
+        bestElevator.moveToUserCurrentFloor(requestedFloor);
         bestElevator.moveToRequestedFloor(1);
    
     }
@@ -220,25 +220,25 @@ namespace myapp
 
             while (this.position > requestedFloor)
             this.position -= 1;
-            Console.WriteLine("Elevator move down to requested floor (" + this.position + ")");
+            Console.WriteLine("Elevator " + this.id + " move down to requested floor (" + this.position + ")");
         }
         if (this.position < requestedFloor){
             while (this.position < requestedFloor)
             this.position += 1;
-            Console.WriteLine("Elevator move up to requested floor (" + this.position + ")");
+            Console.WriteLine("Elevator " + this.id + " move up to requested floor (" + this.position + ")");
         }
         }
     
-        public void theUserCurrentFloor(int userCurrentFloor){
+        public void moveToUserCurrentFloor(int userCurrentFloor){
         if (this.position > userCurrentFloor){
             while (this.position > userCurrentFloor)
             this.position -= 1;
-            Console.WriteLine("Elevator move down to user current floor (" +  this.position + ")");
+            Console.WriteLine("Elevator " + this.id + " move down to user current floor (" +  this.position + ")");
         }
         if (this.position < 1){
             while (this.position < userCurrentFloor)
             this.position += 1;
-            Console.WriteLine("Elevator move up to user current floor (" +  this.position + ")");
+            Console.WriteLine("Elevator " + this.id + " move up to user current floor (" +  this.position + ")");
         }
     }
 }

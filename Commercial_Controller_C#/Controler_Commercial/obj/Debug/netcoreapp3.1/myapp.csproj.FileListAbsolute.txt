@@ -9,3 +9,14 @@ C:\Users\kingk\Desktop\Odyssey_Week3\myapp\obj\Debug\netcoreapp3.1\myapp.Assembl
 C:\Users\kingk\Desktop\Odyssey_Week3\myapp\obj\Debug\netcoreapp3.1\myapp.AssemblyInfo.cs
 C:\Users\kingk\Desktop\Odyssey_Week3\myapp\obj\Debug\netcoreapp3.1\myapp.dll
 C:\Users\kingk\Desktop\Odyssey_Week3\myapp\obj\Debug\netcoreapp3.1\myapp.pdb
+C:\Users\kingk\Desktop\dossierCodeBoxx\Odyssey-Week1\Commercial_Controller_C#\Controler_Commercial\bin\Debug\netcoreapp3.1\myapp.exe
+C:\Users\kingk\Desktop\dossierCodeBoxx\Odyssey-Week1\Commercial_Controller_C#\Controler_Commercial\bin\Debug\netcoreapp3.1\myapp.deps.json
+C:\Users\kingk\Desktop\dossierCodeBoxx\Odyssey-Week1\Commercial_Controller_C#\Controler_Commercial\bin\Debug\netcoreapp3.1\myapp.runtimeconfig.json
+C:\Users\kingk\Desktop\dossierCodeBoxx\Odyssey-Week1\Commercial_Controller_C#\Controler_Commercial\bin\Debug\netcoreapp3.1\myapp.runtimeconfig.dev.json
+C:\Users\kingk\Desktop\dossierCodeBoxx\Odyssey-Week1\Commercial_Controller_C#\Controler_Commercial\bin\Debug\netcoreapp3.1\myapp.dll
+C:\Users\kingk\Desktop\dossierCodeBoxx\Odyssey-Week1\Commercial_Controller_C#\Controler_Commercial\bin\Debug\netcoreapp3.1\myapp.pdb
+C:\Users\kingk\Desktop\dossierCodeBoxx\Odyssey-Week1\Commercial_Controller_C#\Controler_Commercial\obj\Debug\netcoreapp3.1\myapp.csprojAssemblyReference.cache
+C:\Users\kingk\Desktop\dossierCodeBoxx\Odyssey-Week1\Commercial_Controller_C#\Controler_Commercial\obj\Debug\netcoreapp3.1\myapp.AssemblyInfoInputs.cache
+C:\Users\kingk\Desktop\dossierCodeBoxx\Odyssey-Week1\Commercial_Controller_C#\Controler_Commercial\obj\Debug\netcoreapp3.1\myapp.AssemblyInfo.cs
+C:\Users\kingk\Desktop\dossierCodeBoxx\Odyssey-Week1\Commercial_Controller_C#\Controler_Commercial\obj\Debug\netcoreapp3.1\myapp.dll
+C:\Users\kingk\Desktop\dossierCodeBoxx\Odyssey-Week1\Commercial_Controller_C#\Controler_Commercial\obj\Debug\netcoreapp3.1\myapp.pdb

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kingk\\Desktop\\Odyssey_Week3\\myapp\\myapp.csproj": {}
+    "C:\\Users\\kingk\\Desktop\\dossierCodeBoxx\\Odyssey-Week1\\Commercial_Controller_C#\\Controler_Commercial\\myapp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kingk\\Desktop\\Odyssey_Week3\\myapp\\myapp.csproj": {
+    "C:\\Users\\kingk\\Desktop\\dossierCodeBoxx\\Odyssey-Week1\\Commercial_Controller_C#\\Controler_Commercial\\myapp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kingk\\Desktop\\Odyssey_Week3\\myapp\\myapp.csproj",
+        "projectUniqueName": "C:\\Users\\kingk\\Desktop\\dossierCodeBoxx\\Odyssey-Week1\\Commercial_Controller_C#\\Controler_Commercial\\myapp.csproj",
         "projectName": "myapp",
-        "projectPath": "C:\\Users\\kingk\\Desktop\\Odyssey_Week3\\myapp\\myapp.csproj",
+        "projectPath": "C:\\Users\\kingk\\Desktop\\dossierCodeBoxx\\Odyssey-Week1\\Commercial_Controller_C#\\Controler_Commercial\\myapp.csproj",
         "packagesPath": "C:\\Users\\kingk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kingk\\Desktop\\Odyssey_Week3\\myapp\\obj\\",
+        "outputPath": "C:\\Users\\kingk\\Desktop\\dossierCodeBoxx\\Odyssey-Week1\\Commercial_Controller_C#\\Controler_Commercial\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kingk\\AppData\\Roaming\\NuGet\\NuGet.Config"

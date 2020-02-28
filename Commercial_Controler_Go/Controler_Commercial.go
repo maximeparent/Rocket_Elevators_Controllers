@@ -168,7 +168,6 @@ func (column Column) ElevatorInTheChosenColumn(columnFinded Column, requestedFlo
 				}
 			} // if user is not at floor 1
 			if bestCase == 1 && requestedFloor != 1 {
-
 				var gap = int(math.Abs(float64(elevator.position - requestedFloor)))
 				if bestNearestElevatorGap >= gap {
 					bestElevator = elevator
