@@ -79,7 +79,7 @@ func main() {
 // Request Elevator From user
 func (battery Battery) requestElevator(requestedFloor int, direction string, userCurrentFloor int) Elevator {
 
-	if direction == "down" {
+	if userCurrentFloor != 1 {
 		columnFinded := battery.columnToFindUserCurrentFloor(userCurrentFloor)
 		elevatorFinded := columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor)
 		fmt.Println("Elevator choosen is : ", elevatorFinded.id)
