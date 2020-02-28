@@ -82,7 +82,7 @@ func main() {
 func (battery Battery) requestElevator(requestedFloor int, direction string, userCurrentFloor int) Elevator {
 
 	// calling function columnToFindbest
-	columnFinded := battery.columnToFind(userCurrentFloor)
+	columnFinded := battery.columnToFind(requestedFloor)
 	// calling function ElevatorInTheChosenColumn
 	elevatorFinded := columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor)
 	fmt.Println("Elevator choosen is : ", elevatorFinded.id)
