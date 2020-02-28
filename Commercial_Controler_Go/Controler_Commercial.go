@@ -110,7 +110,6 @@ func (elevator Elevator) moveToRequestedFloor(requestedFloor int) {
 	fmt.Println("Elevator", elevator.id, "is at the position", elevator.position)
 }
 
-// for _, elevator := range columnFinded.listElevInColumn {
 func (battery Battery) columnToFind(requestedFloor int) Column {
 
 	for _, column := range battery.listColumnInBattery {
@@ -124,7 +123,7 @@ func (battery Battery) columnToFind(requestedFloor int) Column {
 	return battery.listColumnInBattery[0]
 }
 
-func (elevator Elevator) theUserCurrentFloor(userCurrentFloor int) {
+func (elevator Elevator) moveToUserCurrentFloor(userCurrentFloor int) {
 
 	if elevator.position > userCurrentFloor {
 		for elevator.position > userCurrentFloor {
@@ -250,7 +249,7 @@ func (column Column) ElevatorInTheChosenColumn(columnFinded Column, requestedFlo
 			}
 		}
 	}
-	bestElevator.theUserCurrentFloor(userCurrentFloor)
+	bestElevator.moveToUserCurrentFloor(userCurrentFloor)
 	bestElevator.moveToRequestedFloor(requestedFloor)
 
 	return bestElevator
