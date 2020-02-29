@@ -17,26 +17,25 @@ namespace myapp
     }
     //  Request Elevator by user
     public Elevator requestElevator(int requestedFloor, String direction, int userCurrentFloor){
-        
+        // if user is not at floor 1 call columnToFindUser_CurrentFloor
         if(userCurrentFloor != 1) {
-            Column columnFinded = this.columnToFinduserCurrentFloor(userCurrentFloor);
+            Column columnFinded = this.columnToFindUser_CurrentFloor(userCurrentFloor);
                 // calling function ElevatorInTheChosenColumn
                 Elevator elevatorFinded = columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor);
                 Console.WriteLine("Elevator choosen is : " + elevatorFinded.id);  
                 return elevatorFinded;
-        }
+        }// else call columnToFind_RequestedFloor
         else{
-            Column columnFinded = this.columnToFindrequestedFloor(requestedFloor);
+            Column columnFinded = this.columnToFind_RequestedFloor(requestedFloor);
                 // calling function ElevatorInTheChosenColumn
                 Elevator elevatorFinded = columnFinded.ElevatorInTheChosenColumn(columnFinded, requestedFloor, direction, userCurrentFloor);
                 Console.WriteLine("Elevator choosen is : " + elevatorFinded.id);  
                 return elevatorFinded;
         }
-
     }
     
-    //  If the requested floor is between max floor and min floor return right column repeat for each column in listColumnInBattery
-    public Column columnToFinduserCurrentFloor(int userCurrentFloor){
+    //  If the userCurrentFloor is between max floor and min floor return the right column and repeat for each column in listColumnInBattery
+    public Column columnToFindUser_CurrentFloor(int userCurrentFloor){
         foreach(Column column in listColumnInBattery){
         if (userCurrentFloor <= column.maxFloor && userCurrentFloor >= column.minFloor){
             Console.WriteLine("The choosen column is " + column.id);
@@ -45,7 +44,8 @@ namespace myapp
         }
             return listColumnInBattery[0];
     }
-        public Column columnToFindrequestedFloor(int requestedFloor){
+    //  If the requestedFloor is between max floor and min floor return the right column and repeat for each column in listColumnInBattery
+        public Column columnToFind_RequestedFloor(int requestedFloor){
         foreach(Column column in listColumnInBattery){
         if (requestedFloor <= column.maxFloor && requestedFloor >= column.minFloor){
             Console.WriteLine("The choosen column is " + column.id);
@@ -101,7 +101,7 @@ namespace myapp
                         bestNearestElevatorGap = gap;
                 }
                 }
-            }    
+            }
 
 
             // condition 2
